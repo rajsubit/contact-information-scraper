@@ -14,7 +14,6 @@ class NorthChamberSpider(scrapy.Spider):
             yield scrapy.Request(url, callback=self.parse_dir_content)
 
     def parse_dir_content(self, response):
-        print('entered entered entered entered entered')
         item = NorthchamberItem()
         member_name = response.xpath(
             "//div[@class='page-header']/h1/text()").extract_first()
