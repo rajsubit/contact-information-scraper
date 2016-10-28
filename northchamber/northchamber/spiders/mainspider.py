@@ -1,4 +1,5 @@
 import scrapy
+from selenium import webdriver
 
 from ..items import NorthchamberItem
 
@@ -15,6 +16,11 @@ class NorthChamberSpider(scrapy.Spider):
 
     def parse_dir_content(self, response):
         item = NorthchamberItem()
+        browser = webdriver.PhantomJS('../phantomjs')
+        browser.get(response.url)
+        email = browser.find_element_by_xpath(
+            '//div[@class="col-sm-12"]/span/a')
+        item['email'] = email.text
         member_name = response.xpath(
             "//div[@class='page-header']/h1/text()").extract_first()
         if member_name:
